@@ -1,0 +1,81 @@
+[tool.poetry]
+name = "cqrs-capturer"
+version = "0.1.0"
+description = "Capture django cqrs messages"
+authors = ["Francesco Faraone <ffaraone@gmail.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/ffaraone/cqrs-capturer"
+repository = "https://github.com/ffaraone/cqrs-capturer"
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'Intended Audience :: System Administrators',
+    'License :: OSI Approved :: Apache Software License',
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Environment :: Console',
+    'Topic :: Utilities'
+]
+keywords = [
+    'tail',
+    'log',
+    'django-cqrs',
+    'cqrs',
+]
+packages = [
+    { include = "cqrscap" },
+]
+
+[tool.poetry.scripts]
+cqrscap = 'cqrscap.main:main'
+
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4"
+rich = "^13.2.0"
+uvloop = "^0.17.0"
+click = "^8.1.3"
+kombu = "^5.2.4"
+ujson = "^5.7.0"
+textual = "^0.15.1"
+devtools = "^0.10.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.239"
+pytest = "^7.2.1"
+pytest-cov = "^4.0.0"
+pytest-mock = "^3.10.0"
+pytest-randomly = "^3.12.0"
+pytest-asyncio = "^0.20.3"
+coverage = {extras = ["toml"], version = "^7.1.0"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+log_cli = true
+addopts = "--cov=cqrscap --cov-report=term-missing:skip-covered --cov-report=html --cov-report=xml"
+asyncio_mode = "strict"
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+omit = ["*/constants.py"]
+
+exclude_lines = [
+    "pragma: no cover",
+    "def __str__",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
